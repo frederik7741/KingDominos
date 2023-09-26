@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import math
 
 lion_image = cv2.imread("lion.jpg")
 output_image = np.zeros((lion_image.shape[0],lion_image.shape[1]), dtype=lion_image.dtype)
