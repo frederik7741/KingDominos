@@ -30,67 +30,47 @@ def findDominantRGB():
             criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.2)
             _, labels, centers = cv2.kmeans(np.float32(pixels), k, None, criteria, 10, cv2.KMEANS_RANDOM_CENTERS)
             dominant_colors = np.uint8(centers)
-            print("Tile:", (int(x / 100), int(y / 100)))
+            print("\nTile:", (int(x / 100), int(y / 100)))
             for color in dominant_colors:
-                print("Dominant Color (BGR):", color, "\n")
+                print("Dominant Color (BGR):", color)
 
-                determineColor(color)
+                print(determineColor(color))
 
             cv2.imshow("King Domino Board", tiles)
             cv2.waitKey(0)
             # print(tiles)
 
-def determineColor(color): # needs fixing
-    if (forest_low_range[0] <= color[0] <= forest_up_range[0] and
-        forest_low_range[1] <= color[1] <= forest_up_range[1] and
-        forest_low_range[2] <= color[2] <= forest_up_range[2]):
-        print("forest")
-    elif (plains_low_range[0] <= color[0] <= plains_up_range[0] and
-        plains_low_range[1] <= color[1] <= plains_up_range[1] and
-        plains_low_range[2] <= color[2] <= plains_up_range[2]):
-        print("plains")
-    elif (grass_low_range[0] <= color[0] <= grass_up_range[0] and
-        grass_low_range[1] <= color[1] <= grass_up_range[1] and
-        grass_low_range[2] <= color[2] <= grass_up_range[2]):
-        print("plains")
-    elif (waste_up_range[0] <= color[0] <= waste_low_range[0] and
-        waste_up_range[1] <= color[1] <= waste_low_range[1] and
-        waste_up_range[2] <= color[2] <= waste_low_range[2]):
-        print("plains")
-    elif (plains_low_range[0] <= color[0] <= plains_up_range[0] and
-        plains_low_range[1] <= color[1] <= plains_up_range[1] and
-        plains_low_range[2] <= color[2] <= plains_up_range[2]):
-        print("plains")
-    elif (plains_low_range[0] <= color[0] <= plains_up_range[0] and
-        plains_low_range[1] <= color[1] <= plains_up_range[1] and
-        plains_low_range[2] <= color[2] <= plains_up_range[2]):
-        print("plains")
+def determineColor(color): # could use a for-loop :)
+    print("Biome: ", end="")
+    for i in biome_dict:
+        watched_biome = biome_dict[i]
+
+        for j in enumerate(bgr_dict):
+            bgr_dict.update({j[1]: False})
+            if watched_biome[0][j[0]] <= color[j[0]] <= watched_biome[1][j[0]]:
+                bgr_dict.update({j[1]: True})
+
+        if bgr_dict.get("blue") is True and bgr_dict.get("green") is True and bgr_dict.get("red") == True:
+            return str(i)
     else:
-        print("castle")
+        return "castle"
 
 
-up_range = [255, 255, 255]
-low_range = [0, 0, 0]
+biome_dict = {
+    "forest":  [[15, 29, 10], [67, 91, 65]],
+    "plains":  [[103, 69, 1], [201, 175, 24]],
+    "grass":   [[72, 110, 0], [130, 162, 40]],
+    "waste":    [[69, 46, 12], [141, 132, 101]],
+    "ocean":   [[4, 44, 90], [58, 112, 211]],
+    "mine":    [[21, 21, 11], [158, 128, 38]]
+}
 
-# Forest
-forest_up_range = [46, 91, 65]
-forest_low_range = [15, 29, 16]
-# Plains
-plains_up_range = [103, 69, 8]
-plains_low_range = [198, 172, 15]
-# Grasslands
-grass_up_range = [72, 123, 0]
-grass_low_range = [130, 162, 32]
-# Wasteland
-waste_up_range = [141, 132, 101]
-waste_low_range = [69, 46, 12]
-# Ocean
-ocean_up_range = [8, 112, 211]
-ocean_low_range = [19, 58, 113]
-# Mine
-mine_up_range = [158, 128, 38]
-mine_low_range = [21, 21, 11]
+bgr_dict = {
+    "blue": False,
+    "green": False,
+    "red": False
 
+}
 
 findDominantRGB()
 
