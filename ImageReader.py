@@ -3,9 +3,10 @@ import numpy as np
 import math
 import glob
 
-input_image = cv2.imread("CroppedDataset/1.jpg")
+input_image = cv2.imread("CroppedDataset/10.jpg")
 output = np.zeros((2, 5, 5), dtype=np.int8)
 temp_output = np.zeros((input_image.shape[0],input_image.shape[1]), dtype=input_image.dtype)
+test_array = np.zeros((5,5), dtype=np.str)
 
 for y, row in enumerate(input_image):
     for x, pixel in enumerate(row):
@@ -33,14 +34,15 @@ def findDominantRGB():
             print("\nTile:", (int(x / 100), int(y / 100)))
             for color in dominant_colors:
                 print("Dominant Color (BGR):", color)
-
-                print(determineColor(color))
+                print(determineBiome(color))
+                test_array[int(y / 100)][int(x / 100)] = determineBiome(color)
+            print(test_array)
 
             cv2.imshow("King Domino Board", tiles)
             cv2.waitKey(0)
             # print(tiles)
 
-def determineColor(color): # could use a for-loop :)
+def determineBiome(color):
     print("Biome: ", end="")
     for i in biome_dict:
         watched_biome = biome_dict[i]
@@ -51,37 +53,36 @@ def determineColor(color): # could use a for-loop :)
                 bgr_dict.update({j[1]: True})
 
         if bgr_dict.get("blue") is True and bgr_dict.get("green") is True and bgr_dict.get("red") == True:
-            return str(i)
+            return i
     else:
         return "castle"
 
 
 biome_dict = {
-    "forest":  [[15, 29, 10], [67, 91, 65]],
-    "plains":  [[103, 69, 1], [201, 175, 24]],
-    "grass":   [[72, 110, 0], [130, 162, 40]],
+    "forest":   [[29, 41, 11], [66, 72, 41]],
+    "plains":   [[103, 69, 1], [201, 175, 24]],
+    "grass":    [[72, 110, 0], [130, 162, 40]],
     "waste":    [[69, 46, 12], [141, 132, 101]],
-    "ocean":   [[4, 44, 90], [58, 112, 211]],
-    "mine":    [[21, 21, 11], [158, 128, 38]]
+    "ocean":    [[4, 44, 90], [58, 112, 211]],
+    "mine":     [[50, 41, 19], [78, 66, 35]]
 }
 
 bgr_dict = {
     "blue": False,
     "green": False,
     "red": False
-
 }
 
 findDominantRGB()
 
 #temp_output = np.array_split(input_image, 5)
 #print(temp_output[0])
-        tiles = np.array(input_image[y:y+M, x:x+N])
+        #tiles = np.array(input_image[y:y+M, x:x+N])
 
 
 
-        cv2.imshow("hej", tiles)
-        cv2.waitKey(0)
+        #cv2.imshow("hej", tiles)
+        #cv2.waitKey(0)
         #print(tiles)
 
 
