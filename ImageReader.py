@@ -76,6 +76,20 @@ findDominantRGB()
 
 #temp_output = np.array_split(input_image, 5)
 #print(temp_output[0])
+        tiles = np.array(input_image[y:y+M, x:x+N])
+
+
+
+        cv2.imshow("hej", tiles)
+        cv2.waitKey(0)
+        #print(tiles)
+
+
+
+
+temp_output = np.array_split(input_image, 5)
+print(temp_output[0])
+
 
 #cv2.imshow("image", input_image)
 #cv2.waitKey(0)
