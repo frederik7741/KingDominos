@@ -6,7 +6,7 @@ import glob
 input_image = cv2.imread("CroppedDataset/10.jpg")
 output = np.zeros((2, 5, 5), dtype=np.int8)
 temp_output = np.zeros((input_image.shape[0],input_image.shape[1]), dtype=input_image.dtype)
-test_array = np.zeros((5,5), dtype=np.str)
+biome_array = np.zeros((2,5,5), dtype=np.int8)
 
 for y, row in enumerate(input_image):
     for x, pixel in enumerate(row):
@@ -35,15 +35,16 @@ def findDominantRGB():
             for color in dominant_colors:
                 print("Dominant Color (BGR):", color)
                 print(determineBiome(color))
-                test_array[int(y / 100)][int(x / 100)] = determineBiome(color)
-            print(test_array)
+                biome_array[0][int(y / 100)][int(x / 100)] = determineBiome(color)
 
             cv2.imshow("King Domino Board", tiles)
             cv2.waitKey(0)
             # print(tiles)
+    print(biome_array)
 
 def determineBiome(color):
     print("Biome: ", end="")
+    biome_index = 0
     for i in biome_dict:
         watched_biome = biome_dict[i]
 
@@ -53,9 +54,11 @@ def determineBiome(color):
                 bgr_dict.update({j[1]: True})
 
         if bgr_dict.get("blue") is True and bgr_dict.get("green") is True and bgr_dict.get("red") == True:
-            return i
+            return biome_index
+        biome_index += 1
+
     else:
-        return "castle"
+        return 6
 
 
 biome_dict = {
@@ -77,13 +80,13 @@ findDominantRGB()
 
 #temp_output = np.array_split(input_image, 5)
 #print(temp_output[0])
-        #tiles = np.array(input_image[y:y+M, x:x+N])
+tiles = np.array(input_image[y:y+M, x:x+N])
 
 
 
-        #cv2.imshow("hej", tiles)
-        #cv2.waitKey(0)
-        #print(tiles)
+cv2.imshow("hej", tiles)
+cv2.waitKey(0)
+print(tiles)
 
 
 
