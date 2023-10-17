@@ -89,8 +89,8 @@ def forestOrMine(color):
     mine_diff = 0
     for i in range(len(color)):
         # calculate the differences for each color channels
-        forest_difference[i] = (biome_dict["forest"][1][i] - biome_dict["forest"][0][i]) - color[i]
-        mine_difference[i] = (biome_dict["mine"][1][i] - biome_dict["mine"][0][i]) - color[i]
+        forest_difference[i] = ((biome_dict["forest"][0][i] + biome_dict["forest"][1][i]) / 2) - color[i]
+        mine_difference[i] = ((biome_dict["mine"][0][i] + biome_dict["mine"][1][i]) / 2) - color[i]
         # add the differences together
         forest_diff += abs(forest_difference[i])
         mine_diff += abs(mine_difference[i])
