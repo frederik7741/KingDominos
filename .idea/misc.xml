@@ -5,5 +5,5 @@
     <option name="pathToExecutable" value="C:\Users\Lenovo\anaconda3\Scripts\black.exe" />
     <option name="sdkUUID" value="071ff152-8782-444f-97af-550247c38565" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="newopencv" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="OpenWC" project-jdk-type="Python SDK" />
 </project>

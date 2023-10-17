@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-input_image = cv2.imread("CroppedDataset/7.jpg")
+input_image = cv2.imread("CroppedDataset/10.jpg")
 output = np.zeros((2, 5, 5), dtype=np.int8)
 temp_output = np.zeros((input_image.shape[0], input_image.shape[1]), dtype=input_image.dtype)
 biome_array = np.zeros((2, 5, 5), dtype=np.int8)
@@ -73,11 +73,14 @@ def determine_biome(color):
 def forestOrMine(color):
     forest_difference = [0, 0, 0]
     mine_difference = [0, 0, 0]
+    forest_diff = 0
+    mine_diff = 0
     for i in range(len(color)):
-        forest_difference[i] = abs((biome_dict["forest"][1][i] - biome_dict["forest"][0][i]) - color[i])
-        mine_difference[i] = abs((biome_dict["mine"][1][i] - biome_dict["mine"][0][i]) - color[i])
-    #this is not the best way to do it, as having two lower entries always "wins"
-    if forest_difference > mine_difference: #switch </> if results are wonky
+        forest_difference[i] = (biome_dict["forest"][1][i] - biome_dict["forest"][0][i]) - color[i]
+        mine_difference[i] = (biome_dict["mine"][1][i] - biome_dict["mine"][0][i]) - color[i]
+        forest_diff += abs(forest_difference[i])
+        mine_diff += abs(mine_difference[i])
+    if forest_diff > mine_diff: #switch </> if results are wonky
         return "forest"
     else:
         return "mine"
