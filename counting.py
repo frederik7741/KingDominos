@@ -1,17 +1,22 @@
 import numpy as np
+from ImageReader import find_dominant_rgb
+from testcrown import get_crowns
 
 # Define the 5x5x2 array with 7 different types (replace with your data)
-array = np.array([[[3, 3, 1, 1, 5],
-                   [3, 3, 3, 7, 5],
-                   [4, 4, 3, 7, 6],
-                   [4, 1, 1, 6, 7],
-                   [1, 1, 1, 1, 7]],
-
-                  [[0, 0, 2, 0, 0],
-                   [0, 1, 0, 0, 0],
-                   [0, 0, 0, 0, 1],
-                   [0, 0, 1, 0, 0],
-                   [1, 0, 0, 0, 0]]])
+array = find_dominant_rgb()
+array[1] = get_crowns()
+print(array)
+# array = np.array([[[3, 3, 1, 1, 5],
+#                    [3, 3, 3, 7, 5],
+#                    [4, 4, 3, 7, 6],
+#                    [4, 1, 1, 6, 7],
+#                    [1, 1, 1, 1, 7]],
+#
+#                   [[0, 0, 2, 0, 0],
+#                    [0, 1, 0, 0, 0],
+#                    [0, 0, 0, 0, 1],
+#                    [0, 0, 1, 0, 0],
+#                    [1, 0, 0, 0, 0]]])
 
 def is_valid(x, y, z, layers, rows, cols):
     return 0 <= x < rows and 0 <= y < cols and 0 <= z < layers

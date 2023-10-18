@@ -1,8 +1,10 @@
 import numpy as np
 import cv2
+from choose_image import get_image_index
 
+image_number = get_image_index()
 # Load the image
-image = cv2.imread("CroppedDataset/7.jpg")
+image = cv2.imread(f"CroppedDataset/{image_number}.jpg")
 
 # Display the original image
 cv2.imshow('Original Image', image)
@@ -119,9 +121,14 @@ cv2.imshow('Yellow Objects with Pruned Blobs', image)
 block_blob_counts = [[len(block_blobs[i][j]) for j in range(5)] for i in range(5)]
 
 # Print the resulting count array
+crown_array = np.zeros((5, 5), dtype=np.int8)
 print("Block Blob Counts:")
-for row in block_blob_counts:
-    print(row)
+for i, row in enumerate(block_blob_counts):
+    crown_array[i] = row
+
+def get_crowns():
+    return crown_array
+
 
 # Release OpenCV windows
 cv2.waitKey(0)

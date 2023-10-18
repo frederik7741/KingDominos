@@ -1,18 +1,12 @@
 import cv2
 import numpy as np
+from choose_image import get_image_index
 
-input_image = cv2.imread("CroppedDataset/10.jpg")
+image_number = get_image_index()
+input_image = cv2.imread(f"CroppedDataset/{image_number}.jpg")
 output = np.zeros((2, 5, 5), dtype=np.int8)
 temp_output = np.zeros((input_image.shape[0], input_image.shape[1]), dtype=input_image.dtype)
 biome_array = np.zeros((2, 5, 5), dtype=np.int8)
-
-for y, row in enumerate(input_image):
-    for x, pixel in enumerate(row):
-        new_pixel = (int(pixel[0]) + int(pixel[1]) + int(pixel[2])) / 3
-        new_pixel = int(new_pixel)
-        temp_output[y, x] = new_pixel
-        # temp_output[y, x] = int((int(pixel[0]) + int(pixel[1]) + int(pixel[2])) / 3)
-
 
 imageHeight = input_image.shape[0]
 imageWidth = input_image.shape[1]
@@ -20,7 +14,6 @@ imageWidth = input_image.shape[1]
 # cuts the input image into 5 pieces on both height and width
 M = int(imageHeight / 5)
 N = int(imageWidth / 5)
-
 
 def find_dominant_rgb():
     for y in range(0, imageHeight, M):
@@ -44,7 +37,8 @@ def find_dominant_rgb():
             cv2.imshow("King Domino Board", tiles)
             cv2.waitKey(0)
             # print(tiles)
-    print(biome_array)
+    #print(biome_array)
+    return biome_array
 
 
 def determine_biome(color):
@@ -94,7 +88,7 @@ def forestOrMine(color):
         # add the differences together
         forest_diff += abs(forest_difference[i])
         mine_diff += abs(mine_difference[i])
-    if forest_diff > mine_diff: #switch </> if results are wonky
+    if forest_diff < mine_diff: #switch </> if results are wonky
         return "forest"
     else:
         return "mine"
@@ -119,6 +113,13 @@ bgr_dict = {
 
 find_dominant_rgb()
 
-temp_output = np.array_split(input_image, 5)
-print(temp_output[0])
+for y, row in enumerate(input_image):
+    for x, pixel in enumerate(row):
+        new_pixel = (int(pixel[0]) + int(pixel[1]) + int(pixel[2])) / 3
+        new_pixel = int(new_pixel)
+        temp_output[y, x] = new_pixel
+        # temp_output[y, x] = int((int(pixel[0]) + int(pixel[1]) + int(pixel[2])) / 3)
+
+#temp_output = np.array_split(input_image, 5)
+#print(temp_output[0])
 #tiles = np.array(input_image[y:y+M, x:x+N])
