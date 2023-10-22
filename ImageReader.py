@@ -59,7 +59,7 @@ def determine_biome(color):
                 bgr_dict.update({j[1]: True})
 
         # if all ranges match a biome, that index is true
-        if bgr_dict.get("blue") is True and bgr_dict.get("green") is True and bgr_dict.get("red") is True:
+        if bgr_dict.get("blue") and bgr_dict.get("green") and bgr_dict.get("red") is True:
             biome_bool[biome_index] = True
         biome_index += 1
 
