@@ -7,8 +7,8 @@ image_number = get_image_index()
 image = cv2.imread(f"CroppedDataset/{image_number}.jpg")
 
 # Display the original image
-cv2.imshow('Original Image', image)
-cv2.waitKey(0)
+# cv2.imshow('Original Image', image)
+# cv2.waitKey(0)
 
 # Convert the image to the HSV color space
 hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -21,8 +21,8 @@ upper_yellow = np.array([35, 210, 200])
 yellow_mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
 
 # Display the yellow mask before closing
-cv2.imshow('Yellow Mask (Before Closing)', yellow_mask)
-cv2.waitKey(0)
+# cv2.imshow('Yellow Mask (Before Closing)', yellow_mask)
+# cv2.waitKey(0)
 
 # Apply closing to the mask
 kernel1 = np.ones((5, 5), np.uint8)
@@ -31,15 +31,15 @@ kernel2 = np.ones((3, 3), np.uint8)
 yellow_mask = cv2.morphologyEx(yellow_mask, cv2.MORPH_CLOSE, kernel1, iterations=1)
 
 # Display the yellow mask after closing
-cv2.imshow('Yellow Mask (After Closing)', yellow_mask)
-cv2.waitKey(0)
+# cv2.imshow('Yellow Mask (After Closing)', yellow_mask)
+# cv2.waitKey(0)
 
 # Apply erosion to the mask after closing
 yellow_mask = cv2.erode(yellow_mask, kernel2, iterations=1)
 
 # Display the yellow mask after erosion
-cv2.imshow('Yellow Mask (After Erosion)', yellow_mask)
-cv2.waitKey(0)
+# cv2.imshow('Yellow Mask (After Erosion)', yellow_mask)
+# cv2.waitKey(0)
 
 # Find contours in the binary mask (yellow_mask)
 contours, _ = cv2.findContours(yellow_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -63,7 +63,7 @@ pruned_mask = np.zeros_like(yellow_mask)
 cv2.drawContours(pruned_mask, pruned_blobs, -1, 255, thickness=cv2.FILLED)
 
 # Save the pruned mask as an image
-cv2.imshow('PrunedMask.jpg', pruned_mask)
+# cv2.imshow('PrunedMask.jpg', pruned_mask)
 
 # Create a 5x5 array to store pruned blobs for each block
 block_blobs = [[[] for _ in range(5)] for _ in range(5)]
@@ -115,7 +115,7 @@ for i in range(5):
             cv2.rectangle(image, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
 # Display the result (image with red boxes around pruned blobs)
-cv2.imshow('Yellow Objects with Pruned Blobs', image)
+# cv2.imshow('Yellow Objects with Pruned Blobs', image)
 
 # Iterate through the 5x5 block_blobs array and count the number of contours in each block
 block_blob_counts = [[len(block_blobs[i][j]) for j in range(5)] for i in range(5)]

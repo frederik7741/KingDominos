@@ -5,7 +5,7 @@ from testcrown import get_crowns
 # Define the 5x5x2 array with 7 different types (replace with your data)
 array = find_dominant_rgb()
 array[1] = get_crowns()
-print(array)
+#print(array)
 # array = np.array([[[3, 3, 1, 1, 5],
 #                    [3, 3, 3, 7, 5],
 #                    [4, 4, 3, 7, 6],

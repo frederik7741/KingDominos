@@ -34,8 +34,8 @@ def find_dominant_rgb():
                 print("Biome:", determine_biome(color))
                 biome_array[0][int(y / 100)][int(x / 100)] = determine_biome(color)
 
-            cv2.imshow("King Domino Board", tiles)
-            cv2.waitKey(0)
+            #cv2.imshow("King Domino Board", tiles)
+            #cv2.waitKey(0)
             # print(tiles)
     #print(biome_array)
     return biome_array
